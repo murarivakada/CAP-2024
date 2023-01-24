@@ -1,0 +1,19 @@
+class Solution {
+    public int firstUniqChar(String s) {
+        int count=0;
+        HashMap<Character,Integer> sc=new HashMap<>();
+        for(int i=0;i<s.length();i++){
+            char c=s.charAt(i);
+            sc.put(c,sc.getOrDefault(c,0)+1);
+            }
+            
+        for(int i=0;i<s.length();i++){
+            if(sc.get(s.charAt(i))==1){
+                return i;
+            }
+        }
+        return -1;
+       
+        
+    }
+}
