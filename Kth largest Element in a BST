@@ -1,0 +1,32 @@
+/User function Template for Java
+/*class Node{
+    int data;
+    Node left,right;
+    Node(int d)
+    {
+        data=d;
+        left=right=null;
+    }
+}*/
+
+// Function should return the root of the bst formed using postorder traversal.
+class GFG
+{
+    public static Node constructTree(int post[],int n)
+    {
+        //Add your code here.
+       int bound=Integer.MAX_VALUE;
+        Node result=createTree(post,new int[]{n-1},bound);
+        return result;
+    }
+    public Node createTree(int[]preorder,int[]iter,int bound){
+        int n=preorder.length;
+        if(iter[n-1]==preorder.length||preorder[iter[n-1]]>bound){
+            return null;
+        }
+        Node root=new Node(preorder[iter[n-1]++]);
+        root.left=createTree(preorder,iter,root.data);
+        root.right=createTree(preorder,iter,bound);
+        return root;
+    }
+}
