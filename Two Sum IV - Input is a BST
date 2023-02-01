@@ -1,0 +1,65 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+ class BSTIterator{
+     private Stack<TreeNode>sc=new Stack<>();
+     boolean reserver=true;
+     public BSTIterator(TreeNode root,boolean isresever) {
+         reserver=isresever;
+        pushAll(root);
+    }
+    public int next(){
+        TreeNode temp=sc.pop();
+        if(!reserver){
+            pushAll(temp.right);
+        }
+        else{
+            pushAll(temp.left);
+        }
+        return temp.val;
+    }
+    public void pushAll(TreeNode root){
+        while(root!=null){
+            sc.push(root);
+            if(!reserver){
+                root=root.left;
+            }
+            else{
+                root=root.right;
+            }
+        }
+    }
+
+ }
+class Solution {
+    public boolean findTarget(TreeNode root, int k) {
+        BSTIterator l=new BSTIterator(root,false);
+        BSTIterator r=new BSTIterator(root,true);
+        int i=l.next();
+        int j=r.next();
+        while(i<j){
+        if(i+j==k){
+            return true;
+        }
+        if(i+j<k){
+            i=l.next();
+        }
+        else{
+            j=r.next();
+        }
+        }
+        return false;
+    }
+}
