@@ -1,0 +1,60 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public List<Integer> getAllElements(TreeNode root1, TreeNode root2) {
+        ArrayList<Integer>s=new ArrayList<>();
+        ArrayList<Integer>r1=new ArrayList<>();
+        ArrayList<Integer>r2=new ArrayList<>();
+        inorder(root1,r1);
+        inorder(root2,r2);
+        merge(r1,r2,s);
+        return s;
+
+    }
+    public void inorder(TreeNode root,ArrayList<Integer>sc){
+        if(root==null){
+            return;
+        }
+        inorder(root.left,sc);
+        sc.add(root.val);
+        inorder(root.right,sc);
+    }
+    public void merge(ArrayList<Integer>sc1,ArrayList<Integer>sc2,ArrayList<Integer>sc){
+         int l1=0;
+         int l2=0;
+         int en1=sc1.size();
+         int en2=sc2.size();
+         while(l1<en1 && l2<en2){
+            if(sc1.get(l1)<=sc2.get(l2)){
+                sc.add(sc1.get(l1));
+                l1++;
+            }
+            else{
+                sc.add(sc2.get(l2));
+                l2++;
+            }
+         }
+         while(l1<en1){
+             sc.add(sc1.get(l1));
+             l1++;
+         }
+         while(l2<en2){
+             sc.add(sc2.get(l2));
+             l2++;
+         }
+         
+    }
+}
