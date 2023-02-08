@@ -1,0 +1,52 @@
+class Pair{
+    int row;
+    int col;
+    int step;
+    Pair(int row,int col,int step){
+        this.row=row;
+        this.col=col;
+        this.step=step;
+    }
+}
+class Solution {
+    public int maxDistance(int[][] grid) {
+        int n=grid.length;
+        int m=grid[0].length;
+        Queue<Pair> sc=new LinkedList<>();
+        boolean flag=true;
+        for(int i=0;i<grid.length;i++){
+            for(int j=0;j<grid[0].length;j++){
+                if(grid[i][j]==1){
+                    sc.add(new Pair(i,j,0));
+                }
+                else{
+                    flag=false;
+                }
+            }
+        }
+        if(sc.isEmpty()||flag){
+            return -1;
+        }
+        int max=Integer.MIN_VALUE;
+        int drow[]={0,1,0,-1};
+        int dcol[]={1,0,-1,0};
+        while(!sc.isEmpty()){
+           Pair node=sc.poll();
+           int r=node.row;
+           int c=node.col;
+           int step=node.step;
+           max=Math.max(max,step);
+           for(int i=0;i<drow.length;i++){
+               for(int j=0;j<dcol.length;j++){
+                   int nrow=r+drow[i];
+                   int ncol=c+dcol[i];
+                   if(nrow>=0&& nrow<n && ncol>=0 && ncol<m&& grid[nrow][ncol]==0){
+                       grid[nrow][ncol]=1;
+                       sc.add(new Pair(nrow,ncol,step+1));
+                   }
+               }
+           }
+        }
+        return max;
+    }
+}
